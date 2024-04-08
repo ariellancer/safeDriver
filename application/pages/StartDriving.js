@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation ,useRoute} from '@react-navigation/native';
 import back from '../tools/back.png';
+import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 isDrivingNew = false;
 toAdd = true
 newFinalSeconds = 0;
-luckFocus = 0
 export default function StartDriving() {
   const navigation = useNavigation();
   const route = useRoute();
+  const {numOfUnfocused,setNumOfUnfocused} = useState(0)
   const {finalSeconds,isDriving} = route.params;
   if(toAdd){
     toAdd = false;
@@ -45,19 +46,26 @@ export default function StartDriving() {
     const currentDate = new Date();
     prevTime = currentDate.getTime();
   };
-
+  const addUnfocused = (newVal)=>{
+    console.log("aaaa");
+    console.log(numOfUnfocused)
+    setNumOfUnfocused(newVal);
+  }
   const handleEndDriving = () => {
     isDrivingNew = false;
+    //send to server the time and num of unfocused
+    //setNumOfUnfocused(0);
   };
 
   return (
     <>
+      {isDrivingNew &&  <CameraBackgroundCapture updateVal= {addUnfocused}/> }
       <View style={styles.container}>
         <View style={styles.timerContainer}>
           <Text style={styles.timerText}>{`${timeNew.hours < 10 ? '0' : ''}${timeNew.hours}:${(timeNew.minutes%60) < 10 ? '0' : ''}${timeNew.minutes%60}:${(timeNew.seconds%60) < 10 ? '0' : ''}${timeNew.seconds%60}`}</Text>
         </View>
         <View style={styles.numberOfNotFocus}>
-          <Text style={styles.unFocusedText}>Unfocused: {luckFocus}</Text>
+          <Text style={styles.unFocusedText}>Unfocused: {numOfUnfocused}</Text>
         </View>
         <TouchableOpacity style={isDrivingNew? styles.endDrivingButton : styles.startDrivingButton} onPress={isDrivingNew ? handleEndDriving : handleStartDriving}>
           <Text style={styles.buttonText}>{isDrivingNew ? 'End Driving' : 'Start Driving'}</Text>

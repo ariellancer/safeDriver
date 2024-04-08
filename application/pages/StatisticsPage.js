@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import back from '../tools/back.png';
 import statisticsPic from '../tools/your_statistics.png';
-
+import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 export default function StatisticsPage() {
   const navigation = useNavigation();
   const route = useRoute();
@@ -22,6 +22,7 @@ export default function StatisticsPage() {
   };
   return (
     <>
+      {isDriving &&  <CameraBackgroundCapture/> }
       <View style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={navigateToMenu}>
           <Image source={back} style={styles.backImage} />

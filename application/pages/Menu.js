@@ -1,6 +1,7 @@
-import {React} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import { useNavigation ,useRoute} from '@react-navigation/native';
+import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 export default function Menu() {
   const navigation = useNavigation();
   const route = useRoute();
@@ -34,8 +35,9 @@ export default function Menu() {
   const handleLogout = () => {
     navigation.navigate('Login');
   };
-
   return (
+    <>
+    {isDrivingNew &&  <CameraBackgroundCapture/> }
     <View style={styles.container}>
       <TouchableOpacity style={styles.mainButton} onPress={navigateToDriving}>
          <Text style={styles.buttonText}>To start driving</Text>
@@ -50,6 +52,7 @@ export default function Menu() {
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
     </View>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import { Camera, CameraType } from 'expo-camera';
 import { useState } from 'react';
 import { Pressable,Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 export default function App() {
   const navigation = useNavigation();
   const [type, setType] = useState(CameraType.back);
@@ -40,18 +41,22 @@ export default function App() {
   }
 
   return (
+    <>
+    {isDriving &&  <CameraBackgroundCapture/> }
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
+      <Camera style={{ flex: 1 }}
+      type={type}>
         <View style={styles.buttonContainer}>
+        <Pressable style={styles.backButton} onPress={navigateToMenu} >
+            <Text style={styles.text} > Back to Menu   </Text>
+          </Pressable>
           <TouchableOpacity style={styles.cameraButton} onPress={toggleCameraType}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
-          <Pressable style={styles.backButton} onPress={navigateToMenu} >
-            <Text style={styles.text} > Back to Menu</Text>
-          </Pressable>
         </View>
-      </Camera>
+        </Camera>
     </View>
+    </>
   );
 }
 
@@ -59,9 +64,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-  },
-  camera: {
-    flex: 1,
   },
   backButton: {
   },
@@ -72,10 +74,6 @@ const styles = StyleSheet.create({
     margin: 64,
   },
   cameraButton: {
-    flex: 1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-    marginTop: '10',
   },
   text: {
     fontSize: 24,
