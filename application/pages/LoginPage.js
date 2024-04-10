@@ -39,8 +39,8 @@ export default function LoginPage() {
             body: JSON.stringify(forToken)
             });
           if (response.status === 200) {
-            const result = await response.json();
-            navigation.navigate('Menu',{finalSeconds,isDriving}); 
+            const token = await response.text();
+            navigation.navigate('Menu',{finalSeconds,isDriving,toSend:false,prev:0,token:token,hour:0}); 
             setUsernameEmpty(false);
             setPasswordEmpty(false);
             setPassword("");
@@ -54,7 +54,7 @@ export default function LoginPage() {
           }
       } catch (error) {
         //setErrorInConnect(true); //add this row when the server working
-        navigation.navigate('Menu',{finalSeconds,isDriving});  //delete this row when the server working
+        navigation.navigate('Menu',{finalSeconds,isDriving,toSend:false,prev:0,token:"aaaa",hour:0});  //delete this row when the server working
         setUsernameEmpty(false);
         setPasswordEmpty(false);
         setPassword("");

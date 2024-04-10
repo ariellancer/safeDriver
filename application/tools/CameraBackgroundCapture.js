@@ -1,16 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import { Camera } from 'expo-camera';
-
-const CameraBackgroundCapture = ({updateVal}) => {
+import { Vibration } from 'react-native';
+const CameraBackgroundCapture = ({updateVal,style,t,token}) => {
   const cameraRef = useRef(null);
+
+// Function to make the phone beep
+const makeBeep = () => {
+  // Vibrate for 500 milliseconds
+  Vibration.vibrate(1000);
+};
   useEffect(() => {
     const takePicture = async () => {
       if (Platform.OS === 'android') {
         // Request permission for Android
-        const { status } = await Camera.requestMicrophonePermissionsAsync();
+        const { status } = await  Camera.requestMicrophonePermissionsAsync();;
         if (status !== 'granted') {
-          console.log('Camera permission denied');
           return;
         }
       }
@@ -18,14 +23,43 @@ const CameraBackgroundCapture = ({updateVal}) => {
       // Take picture using expo-camera
       if (cameraRef.current) {
         const options = { quality: 0.5, base64: true };
+        var pictures =[]
         for (let i = 0; i < 3; i++) {
           // Take picture
           const data = await cameraRef.current.takePictureAsync(options);
           console.log(`Picture ${i + 1}: ${data.uri}`);
-          await new Promise(resolve => setTimeout(resolve, 750)); 
+          const start = Date.now();
+          pictures.push(data.base64);
+          while (Date.now() - start < 750) {}
+          //await new Promise(resolve => setTimeout(resolve, 750)); 
         }
         // send to server 3 pictures
-        updateVal(prevValue => prevValue + 1); //if the server send not focus
+        try{
+          const check = {
+            pictures:pictures
+          }
+          const res = await fetch('http://localhost:5000/api/Model/', {
+            'method': 'get',
+            'headers':{
+                'Content-Type': 'application/json',
+                'authorization': 'bearer ' + token,
+              },
+            'body': JSON.stringify(check)
+          })
+          if(res.status === 200){
+            var temp = await res.text();
+            temp = JSON.parse(temp);
+            if(temp.result === 1){
+              updateVal();
+              makeBeep();
+              //beep
+            }
+          }
+      }catch(error){
+        console.log(error);
+      }
+      updateVal(); //delete
+      makeBeep();
       }
     };
 
@@ -40,8 +74,8 @@ const CameraBackgroundCapture = ({updateVal}) => {
   return (
 <Camera
   ref={cameraRef}
-  style={{ position: 'absolute', bottom: 0, left: 0, width: 150, height: 200 }}
-  type={Camera.Constants.Type.back}
+  style={style}
+  type={t}
 />
 
   );
