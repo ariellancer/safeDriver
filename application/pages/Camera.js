@@ -14,7 +14,6 @@ export default function App() {
   numOfUnfocused = prev;
   const currentDate = new Date();
   prevTimer = currentDate.getTime();
-
   const navigateToMenu = () => {
     if(isDriving){
       const currentDate = new Date();
@@ -41,6 +40,7 @@ export default function App() {
   }
   const addUnfocused = ()=>{
     numOfUnfocused+=1;
+    console.log(numOfUnfocused);
     
   }
   function toggleCameraType() {
@@ -48,7 +48,7 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      {isDriving ? <CameraBackgroundCapture updateVal={addUnfocused} style={styles.camera} type={type} token={token}/>:<Camera style={styles.camera} type={type} />}
+      {isDriving ? <CameraBackgroundCapture updateVal={addUnfocused} style={styles.camera} type={type} token={token} />:<Camera style={styles.camera} type={type} />}
       <View style={styles.buttonContainer}>
         <Pressable style={styles.backButton} onPress={navigateToMenu}>
           <Text style={styles.text}>Back to Menu</Text>

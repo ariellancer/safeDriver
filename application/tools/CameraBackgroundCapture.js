@@ -1,14 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
-import { Camera } from 'expo-camera';
-import { Vibration } from 'react-native';
+import { Camera ,CameraType } from 'expo-camera';
+import { Audio } from 'expo-av';
 const CameraBackgroundCapture = ({updateVal,style,t,token}) => {
-  const cameraRef = useRef(null);
-
+const cameraRef = useRef(null);
 // Function to make the phone beep
-const makeBeep = () => {
-  // Vibrate for 500 milliseconds
-  Vibration.vibrate(1000);
+const makeBeep = async () => {
+  const soundObject = new Audio.Sound();
+  try {
+    await soundObject.loadAsync(require('../tools/beep-04.mp3'));
+    await soundObject.setIsLoopingAsync(true); // Set looping to true
+    await soundObject.playAsync();
+    setTimeout(async () => {
+      await soundObject.stopAsync();
+      await soundObject.unloadAsync();
+    }, 5000); // Stop the loop after 5 seconds
+  } catch (error) {
+    console.error('Failed to play chirp sound', error);
+  }
 };
   useEffect(() => {
     const takePicture = async () => {
@@ -19,7 +28,7 @@ const makeBeep = () => {
           return;
         }
       }
-
+      try{
       // Take picture using expo-camera
       if (cameraRef.current) {
         const options = { quality: 0.5, base64: true };
@@ -61,6 +70,9 @@ const makeBeep = () => {
       updateVal(); //delete
       makeBeep();
       }
+    }catch(error){
+      console.log("error back")
+    }
     };
 
     const timer = setInterval(() => {

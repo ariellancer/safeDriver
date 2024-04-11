@@ -10,7 +10,7 @@ export default function StartDriving() {
   const navigation = useNavigation();
   const route = useRoute();
   const {finalSeconds,isDriving,prev,token} = route.params;
-  prev;
+
   if(toAdd){
     toAdd = false;
     newFinalSeconds = finalSeconds;
@@ -48,17 +48,18 @@ export default function StartDriving() {
     setTime(({ hours: 0, minutes: 0, seconds: 0 }));
     newFinalSeconds = 0;
     prevTime = currentDate.getTime();
-    navigateToMenu();
+    toAdd = true;
+    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:false,prev :0,token,hour:nhour})
   };
   const handleEndDriving = () => {
     isDrivingNew = false;
     toAdd = true;
-    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:true,prev:0,token,hour:nhour})
+    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:true,prev:prev,token,hour:nhour})
     //send to server the time and num of unfocused
   };
   const navigateToMenu = () => {
     toAdd = true;
-    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:false,prev :0,token,hour:nhour})
+    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:false,prev :prev,token,hour:nhour})
   };
   return (
     <>

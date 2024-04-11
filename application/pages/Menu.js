@@ -10,7 +10,7 @@ export default function Menu() {
   const navigation = useNavigation();
   const route = useRoute();
   const { finalSeconds, isDriving, toSend, prev,token,hour} = route.params;
-  numOfUnfocused += prev;
+  numOfUnfocused = prev ==0 ? 0 : numOfUnfocused<prev ? prev : numOfUnfocused;
   const [showModal, setShowModal] = useState(false);
   const [updateCounter, setUpdateCounter] = useState(0);
   const currentDate = new Date();
@@ -37,7 +37,7 @@ export default function Menu() {
       return
     }
     toSendNew = true; 
-    navigation.navigate('Camera',{finalSeconds: newFinalSeconds,isDriving,toSend:false,prev:0,token});
+    navigation.navigate('Camera',{finalSeconds: newFinalSeconds,isDriving,toSend:false,prev:numOfUnfocused,token});
   };
   const navigateToStatistics = () => {
     if(toSend&&toSendNew){
@@ -52,7 +52,7 @@ export default function Menu() {
       newFinalSeconds = finalSeconds;
     }
     toSendNew = true; 
-    navigation.navigate('StatisticsPage',{finalSeconds: newFinalSeconds,isDriving,toSend:false,token});
+    navigation.navigate('StatisticsPage',{finalSeconds: newFinalSeconds,isDriving,toSend:false,prev:numOfUnfocused,token});
   };
   const addUnfocused = ()=>{
     numOfUnfocused+=1;

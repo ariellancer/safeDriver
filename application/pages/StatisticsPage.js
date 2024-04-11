@@ -7,7 +7,7 @@ import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 export default function StatisticsPage () {
   const navigation = useNavigation();
   const route = useRoute();
-  var {finalSeconds,isDriving,toSend,token} = route.params;
+  var {finalSeconds,isDriving,toSend,prev,token} = route.params;
   const currentDate = new Date();
   prevTimer = currentDate.getTime();
   const navigateToMenu =  () => {
@@ -18,7 +18,7 @@ export default function StatisticsPage () {
     }else{
       newFinalSeconds = finalSeconds;
     } 
-    navigation.navigate('Menu',{finalSeconds: newFinalSeconds,isDriving,toSend,prev:0,token});
+    navigation.navigate('Menu',{finalSeconds: newFinalSeconds,isDriving,toSend,prev,token});
   };
   const fetchDataFromServer = async () => {
     try {
