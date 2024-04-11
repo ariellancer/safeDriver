@@ -29,7 +29,7 @@ export default function StatisticsPage () {
           'authorization': 'bearer ' + token,
         },
       });
-      if (res.ok) {
+      if (res.status === 200) {
         var data = await res.text();
         data = JSON.parse(date);
         statisticsPic=data.img

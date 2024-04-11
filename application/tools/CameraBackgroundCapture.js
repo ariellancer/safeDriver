@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import { Camera ,CameraType } from 'expo-camera';
 import { Audio } from 'expo-av';
-const CameraBackgroundCapture = ({updateVal,style,t,token}) => {
+const CameraBackgroundCapture = ({updateVal,style,type,token}) => {
 const cameraRef = useRef(null);
 // Function to make the phone beep
 const makeBeep = async () => {
@@ -29,20 +29,15 @@ const makeBeep = async () => {
         }
       }
       try{
-      // Take picture using expo-camera
       if (cameraRef.current) {
         const options = { quality: 0.5, base64: true };
         var pictures =[]
         for (let i = 0; i < 3; i++) {
-          // Take picture
           const data = await cameraRef.current.takePictureAsync(options);
-          console.log(`Picture ${i + 1}: ${data.uri}`);
           const start = Date.now();
           pictures.push(data.base64);
-          while (Date.now() - start < 750) {}
-          //await new Promise(resolve => setTimeout(resolve, 750)); 
+          while (Date.now() - start < 750) {}//3/4 sec between each picture
         }
-        // send to server 3 pictures
         try{
           const check = {
             pictures:pictures
@@ -61,14 +56,13 @@ const makeBeep = async () => {
             if(temp.result === 1){
               updateVal();
               makeBeep();
-              //beep
             }
           }
       }catch(error){
         console.log(error);
       }
       updateVal(); //delete
-      makeBeep();
+      makeBeep(); //delete
       }
     }catch(error){
       console.log("error back")
@@ -87,7 +81,7 @@ const makeBeep = async () => {
 <Camera
   ref={cameraRef}
   style={style}
-  type={t}
+  type={type}
 />
 
   );

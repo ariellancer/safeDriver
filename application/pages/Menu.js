@@ -37,7 +37,9 @@ export default function Menu() {
       return
     }
     toSendNew = true; 
-    navigation.navigate('Camera',{finalSeconds: newFinalSeconds,isDriving,toSend:false,prev:numOfUnfocused,token});
+    const currentDate = new Date();
+    prevTimer = currentDate.getTime();
+    navigation.navigate('Camera',{finalSeconds: newFinalSeconds,isDriving,toSend:false,prev:numOfUnfocused,token,prevTimer});
   };
   const navigateToStatistics = () => {
     if(toSend&&toSendNew){
@@ -75,7 +77,6 @@ export default function Menu() {
     setUpdateCounter(updateCounter + 1);
     const currentDate = new Date();
     var nhour = currentDate.getHours();
-    console.log(hour);
     newDrive={
       start:hour,
       end:nhour,

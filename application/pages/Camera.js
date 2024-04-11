@@ -7,13 +7,11 @@ var numOfUnfocused = 0;
 newFinalSeconds=0
 export default function App() {
   const navigation = useNavigation();
-  const [type, setType] = useState(CameraType.back);
+  const [type, setType] = useState(CameraType.front);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const route = useRoute();
-  var {finalSeconds,isDriving,toSend,prev,token} = route.params;
+  var {finalSeconds,isDriving,toSend,prev,token,prevTimer} = route.params;
   numOfUnfocused = prev;
-  const currentDate = new Date();
-  prevTimer = currentDate.getTime();
   const navigateToMenu = () => {
     if(isDriving){
       const currentDate = new Date();
