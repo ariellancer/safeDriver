@@ -32,7 +32,7 @@ export default function LoginPage() {
       };
       try {
           const response = await fetch('http://localhost:5000/api/Login', {
-            method: 'POST',
+            method: 'post',
             headers: {
               'Content-Type': 'application/json',
             },

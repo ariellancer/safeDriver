@@ -84,7 +84,7 @@ export default function Menu() {
     }
     try{
       const res = await fetch('http://localhost:5000/api/Statistics/', {
-        'method': 'update',
+        'method': 'put',
         'headers':{
             'Content-Type': 'application/json',
             'authorization': 'bearer ' + token,
