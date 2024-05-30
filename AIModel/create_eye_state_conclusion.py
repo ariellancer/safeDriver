@@ -151,7 +151,7 @@ acc = test_score[1] * 100
 save_path = ''
 
 # Save model
-save_id = 'eye_state_detection_model_try1.h5'
+save_id = 'eye_state_conclusion.h5'
 model_save_loc = os.path.join(save_path, save_id)
 model.save(model_save_loc)
 print(f'model was saved as {model_save_loc}')
