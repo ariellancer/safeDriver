@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation ,useRoute} from '@react-navigation/native';
 import back from '../tools/back.png';
-import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 isDrivingNew = false;
 toAdd = true
-newFinalSeconds = 0;
+number = 0;
+nhour =0
 export default function StartDriving() {
   const navigation = useNavigation();
   const route = useRoute();
-  const {numOfUnfocused,setNumOfUnfocused} = useState(0)
-  const {finalSeconds,isDriving} = route.params;
+  const {finalSeconds,isDriving,prev,token} = route.params;
+
   if(toAdd){
     toAdd = false;
     newFinalSeconds = finalSeconds;
@@ -40,37 +40,40 @@ export default function StartDriving() {
     return () => clearTimeout(timeoutId);
   }, [isDrivingNew]);
   const handleStartDriving = () => {
+    const currentDate = new Date();
+    nhour = currentDate.getHours();
+    nminute= currentDate.getMinutes();
+    nsecond = currentDate.getSeconds();
     isDrivingNew = true;
     setTime(({ hours: 0, minutes: 0, seconds: 0 }));
     newFinalSeconds = 0;
-    const currentDate = new Date();
     prevTime = currentDate.getTime();
+    toAdd = true;
+    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:false,prev :0,token,hour:nhour})
   };
-  const addUnfocused = (newVal)=>{
-    console.log("aaaa");
-    console.log(numOfUnfocused)
-    setNumOfUnfocused(newVal);
-  }
   const handleEndDriving = () => {
     isDrivingNew = false;
+    toAdd = true;
+    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:true,prev:prev,token,hour:nhour})
     //send to server the time and num of unfocused
-    //setNumOfUnfocused(0);
   };
-
+  const navigateToMenu = () => {
+    toAdd = true;
+    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:false,prev :prev,token,hour:nhour})
+  };
   return (
     <>
-      {isDrivingNew &&  <CameraBackgroundCapture updateVal= {addUnfocused}/> }
       <View style={styles.container}>
         <View style={styles.timerContainer}>
           <Text style={styles.timerText}>{`${timeNew.hours < 10 ? '0' : ''}${timeNew.hours}:${(timeNew.minutes%60) < 10 ? '0' : ''}${timeNew.minutes%60}:${(timeNew.seconds%60) < 10 ? '0' : ''}${timeNew.seconds%60}`}</Text>
         </View>
         <View style={styles.numberOfNotFocus}>
-          <Text style={styles.unFocusedText}>Unfocused: {numOfUnfocused}</Text>
+          <Text style={styles.unFocusedText}>Unfocused: {prev}</Text>
         </View>
         <TouchableOpacity style={isDrivingNew? styles.endDrivingButton : styles.startDrivingButton} onPress={isDrivingNew ? handleEndDriving : handleStartDriving}>
           <Text style={styles.buttonText}>{isDrivingNew ? 'End Driving' : 'Start Driving'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.backButton} onPress={() =>  {navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew}); toAdd = true}}>
+        <TouchableOpacity style={styles.backButton} onPress={navigateToMenu}>
           <Image source={back} style={styles.backImage} />
         </TouchableOpacity>
       </View>

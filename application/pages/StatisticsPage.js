@@ -4,13 +4,13 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import back from '../tools/back.png';
 import statisticsPic from '../tools/your_statistics.png';
 import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
-export default function StatisticsPage() {
+export default function StatisticsPage () {
   const navigation = useNavigation();
   const route = useRoute();
-  var {finalSeconds,isDriving} = route.params;
+  var {finalSeconds,isDriving,toSend,prev,token} = route.params;
   const currentDate = new Date();
   prevTimer = currentDate.getTime();
-  const navigateToMenu = () => {
+  const navigateToMenu =  () => {
     if(isDriving){
       const currentDate = new Date();
       currentTimer = currentDate.getTime();
@@ -18,11 +18,35 @@ export default function StatisticsPage() {
     }else{
       newFinalSeconds = finalSeconds;
     } 
-    navigation.navigate('Menu',{finalSeconds: newFinalSeconds,isDriving});
+    navigation.navigate('Menu',{finalSeconds: newFinalSeconds,isDriving,toSend,prev,token});
   };
+  const fetchDataFromServer = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/Statistics/' , {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'bearer ' + token,
+        },
+      });
+      if (res.status === 200) {
+        var data = await res.text();
+        data = JSON.parse(date);
+        statisticsPic=data.img
+      } else {
+        console.error('Failed to fetch data from the server');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataFromServer(); // Fetch data when the component mounts
+  }, []);
   return (
     <>
-      {isDriving &&  <CameraBackgroundCapture/> }
+      {/* {isDriving &&  <CameraBackgroundCapture updateVal= {addUnfocused}/> } */}
       <View style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={navigateToMenu}>
           <Image source={back} style={styles.backImage} />

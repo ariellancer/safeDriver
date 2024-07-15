@@ -1,14 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef,useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import { useNavigation ,useRoute} from '@react-navigation/native';
 import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
+import { Camera } from 'expo-camera';
+var numOfUnfocused = 0;
+var toSendNew = true
+send = false;
 export default function Menu() {
   const navigation = useNavigation();
   const route = useRoute();
-  var {finalSeconds,isDriving} = route.params;
+  const { finalSeconds, isDriving, toSend, prev,token,hour} = route.params;
+  numOfUnfocused = prev ==0 ? 0 : numOfUnfocused<prev ? prev : numOfUnfocused;
+  const [showModal, setShowModal] = useState(false);
+  const [updateCounter, setUpdateCounter] = useState(0);
   const currentDate = new Date();
   prevTimer = currentDate.getTime();
   const navigateToDriving = () => {
+    if(toSend&&toSendNew){
+      setShowModal(true);
+      return
+    }
     if(isDriving){
       const currentDate = new Date();
       currentTimer = currentDate.getTime();
@@ -16,44 +27,147 @@ export default function Menu() {
     }else{
       newFinalSeconds = finalSeconds;
     } 
-    navigation.navigate('StartDriving',{finalSeconds: newFinalSeconds,isDriving});
+    toSendNew = true; 
+    send= false;
+    navigation.navigate('StartDriving',{finalSeconds: newFinalSeconds,isDriving,prev:numOfUnfocused,token});
   };
   const navigateToCamera = () => {
-    navigation.navigate('Camera',{finalSeconds: newFinalSeconds,isDriving});
+    if(toSend&&toSendNew){
+      setShowModal(true);
+      return
+    }
+    toSendNew = true; 
+    const currentDate = new Date();
+    prevTimer = currentDate.getTime();
+    navigation.navigate('Camera',{finalSeconds: newFinalSeconds,isDriving,toSend:false,prev:numOfUnfocused,token,prevTimer});
   };
   const navigateToStatistics = () => {
+    if(toSend&&toSendNew){
+      setShowModal(true);
+      return
+    }
     if(isDriving){
       const currentDate = new Date();
       currentTimer = currentDate.getTime();
       newFinalSeconds = finalSeconds + Math.floor((currentTimer - prevTimer)/1000);
     }else{
       newFinalSeconds = finalSeconds;
-    } 
-    navigation.navigate('StatisticsPage',{finalSeconds: newFinalSeconds,isDriving});
+    }
+    toSendNew = true; 
+    navigation.navigate('StatisticsPage',{finalSeconds: newFinalSeconds,isDriving,toSend:false,prev:numOfUnfocused,token});
   };
-
+  const addUnfocused = ()=>{
+    numOfUnfocused+=1;
+    console.log(numOfUnfocused);
+    
+  }
   const handleLogout = () => {
+    if(toSend&&toSendNew){
+      setShowModal(true);
+      return
+    }
+    toSendNew = true; 
     navigation.navigate('Login');
   };
+  const sendToServer = async() => {
+    toSendNew = false; //delete when the server working
+    send = true; //delete when the server working
+    setShowModal(false); //delete when the server working
+    numOfUnfocused = 0; //delete when the server working
+    setUpdateCounter(updateCounter + 1);
+    const currentDate = new Date();
+    var nhour = currentDate.getHours();
+    newDrive={
+      start:hour,
+      end:nhour,
+      unfocused:numOfUnfocused
+    }
+    try{
+      const res = await fetch('http://localhost:5000/api/Statistics/', {
+        'method': 'put',
+        'headers':{
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token,
+        },
+        'body': JSON.stringify(newDrive)
+    })
+    if(res.status ===200){
+      toSendNew = false;
+      send = true;
+      setShowModal(false);
+      numOfUnfocused = 0;
+    }else{
+      console.error("Error in sending to server")
+    }
+    }catch(error){
+      console.error(error);
+    }
+  };
+  const ConfirmationModal = ({ message, onConfirm, onCancel }) => {
+    return (
+      <View style={styles.modalContainer}>
+        <View style={styles.modal}>
+          <View style={styles.modalContent}>
+            <Text>{message}</Text> 
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity  style={styles.button} onPress={onConfirm}>
+                <Text>Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity  style={styles.button} onPress={onCancel}>
+                <Text>No</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  };
+  const onConfirm = ()=>{
+    toSendNew = false;
+    setShowModal(false);
+  }
+  const onCancel = ()=>{
+    setShowModal(false);
+  }
   return (
     <>
-    {isDrivingNew &&  <CameraBackgroundCapture/> }
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.mainButton} onPress={navigateToDriving}>
-         <Text style={styles.buttonText}>To start driving</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.mainButton} onPress={navigateToStatistics}>
-        <Text style={styles.buttonText}>To your statistics</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.mainButton} onPress={navigateToCamera}>
-        <Text style={styles.buttonText}>Camera direction</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.logout} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
-    </View>
+          {isDriving && (
+        <CameraBackgroundCapture
+          updateVal={addUnfocused}
+          style={{ position: 'absolute', bottom: 0, left: 0, width: 150, height: 200 }}
+          type={Camera.Constants.Type.back}
+          token={token}
+        />
+      )}
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.mainButton} onPress={navigateToDriving}>
+          <Text style={styles.buttonText}>To start driving</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.mainButton} onPress={navigateToStatistics}>
+          <Text style={styles.buttonText}>To your statistics</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.mainButton} onPress={navigateToCamera}>
+          <Text style={styles.buttonText}>Camera direction</Text>
+        </TouchableOpacity>
+        {toSend && (
+          <TouchableOpacity style={styles.mainButton} onPress={!send ? sendToServer : () => {}}>
+            <Text style={styles.buttonText}>{!send ? "Send the result to server" : "sent"}</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity style={styles.logout} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+      {showModal && (
+        <ConfirmationModal
+          message="You sure don't want to send??"
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+        />
+      )}
     </>
   );
+  
 }
 
 const styles = StyleSheet.create({
@@ -84,6 +198,33 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  modalContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 20,
+  },
+  modalContent: {
+    alignItems: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  button: {
+    paddingVertical: 10, // Adjust as needed
+    paddingHorizontal: 20, // Adjust as needed
   },
   
 });

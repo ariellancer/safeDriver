@@ -46,9 +46,8 @@ export default function RegisterPage() {
             lastname: lastname,
             username: username,
             password: password};
-            console.log(54);
        try{
-         const response = await fetch('http://localhost:5000/api/Register', {
+                const response = await fetch('http://localhost:5000/api/Register', {
                 'method': 'post',
                 'headers':{
                     'Content-Type': 'application/json',
@@ -56,13 +55,12 @@ export default function RegisterPage() {
                 'body': JSON.stringify(newUser)
             })
          if(response.status === 200){
-            navigateToLogin;
+            navigateToLogin();
          }else if(response.status === 404) {
             setIsExists(true);
             setIfFieldEmpty(false);
             }
           }catch(error){
-            console.log(5);
             setErrorInConnect(true);
           }
         }  
