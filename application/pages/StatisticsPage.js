@@ -22,11 +22,12 @@ export default function StatisticsPage () {
   };
   const fetchDataFromServer = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/Statistics/' , {
+      console.log(token)
+      const res = await fetch('https://5409-188-64-206-240.ngrok-free.app/api/Statistics' , {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': 'bearer ' + token,
+          'authorization': 'Bearer ' + token,
         },
       });
       if (res.status === 200) {

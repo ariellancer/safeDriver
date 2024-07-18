@@ -1,7 +1,8 @@
 from functools import wraps
 
 from flask import request, jsonify
-from jwt import ExpiredSignatureError, InvalidTokenError
+from jwt import InvalidTokenError
+from jwt.exceptions import ExpiredSignatureError
 
 from Server.models.user import User
 import jwt

@@ -47,16 +47,17 @@ export default function RegisterPage() {
             username: username,
             password: password};
        try{
-                const response = await fetch('http://localhost:5000/api/Register', {
+                const response = await fetch('https://5409-188-64-206-240.ngrok-free.app/api/Register', {
                 'method': 'post',
                 'headers':{
                     'Content-Type': 'application/json',
                 },
                 'body': JSON.stringify(newUser)
             })
+         console.log(response)
          if(response.status === 200){
             navigateToLogin();
-         }else if(response.status === 404) {
+         }else if(response.status === 403) {
             setIsExists(true);
             setIfFieldEmpty(false);
             }

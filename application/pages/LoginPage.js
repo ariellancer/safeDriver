@@ -31,7 +31,7 @@ export default function LoginPage() {
         password: password
       };
       try {
-          const response = await fetch('http://localhost:5000/api/Login', {
+          const response = await fetch('https://5409-188-64-206-240.ngrok-free.app/api/Login', {
             method: 'post',
             headers: {
               'Content-Type': 'application/json',
@@ -53,8 +53,7 @@ export default function LoginPage() {
             setErrorInLogin(true);
           }
       } catch (error) {
-        //setErrorInConnect(true); //add this row when the server working
-        navigation.navigate('Menu',{finalSeconds,isDriving,toSend:false,prev:0,token:"aaaa",hour:0});  //delete this row when the server working
+        setErrorInConnect(true);
         setUsernameEmpty(false);
         setPasswordEmpty(false);
         setPassword("");
