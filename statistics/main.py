@@ -14,12 +14,16 @@ def create_clock_pie_chart(data, output_filename):
 
     # Define colors based on percentage ranges
     colors = []
+    percentiles = data.copy()
+    percentiles.sort()
+    percentiles = [percentiles[i] for i in [2,5,8]]
+
     for value in data:
-        if value <= 25:
+        if value <= percentiles[0]:
             colors.append('#d9d2e9')  # Light Purple
-        elif value <= 50:
+        elif value <= percentiles[1]:
             colors.append('#b3a2c7')  # Medium Purple
-        elif value <= 75:
+        elif value <= percentiles[2]:
             colors.append('#7a5299')  # Dark Purple
         else:
             colors.append('#3f007d')  # Very Dark Purple
@@ -49,6 +53,6 @@ def create_clock_pie_chart(data, output_filename):
 
 
 # Example usage:
-data_array = [15, 30, 45, 60, 20, 35, 50, 75, 80, 90, 10, 5]
+data_array = [50, 30, 45, 60, 20, 35, 50, 10, 80, 90, 10, 5]
 output_filename = "your_statistics.png"
 create_clock_pie_chart(data_array, output_filename)
