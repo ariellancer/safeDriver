@@ -1,4 +1,4 @@
-from Server.models.user import UserModel
+# from Server.models.user import UserModel
 from Server.service.user import add_user_service, find_user_service
 from flask import request, jsonify
 from pydantic import ValidationError
@@ -11,14 +11,14 @@ async def add_user_controller():
         user_data = await request.get_json()
 
         # Validate the data using Pydantic
-        validated_data = UserModel(**user_data)
+        # validated_data = UserModel(**user_data)
 
         # Create and save the user to MongoDB using the service
         result = await add_user_service(
-            firstname=validated_data.firstname,
-            lastname=validated_data.lastname,
-            username=validated_data.username,
-            password=validated_data.password
+            firstname=user_data.firstname,
+            lastname=user_data.lastname,
+            username=user_data.username,
+            password=user_data.password
         )
 
         if result == -1:

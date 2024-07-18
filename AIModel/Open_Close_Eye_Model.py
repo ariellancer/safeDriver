@@ -11,11 +11,11 @@ from threading import Lock
 temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
 
-model_detection = torch.hub.load("yolov5", 'custom',
-                                 path="eyes_detection_model.pt",
+model_detection = torch.hub.load("../AIModel/yolov5", 'custom',
+                                 path="../AIModel/eyes_detection_model.pt",
                                  source="local"
                                  )
-model_eye_conclusion = tf.keras.models.load_model('eye_state_conclusion.h5')
+model_eye_conclusion = tf.keras.models.load_model('../AIModel/eye_state_conclusion.h5')
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 

@@ -61,6 +61,7 @@ export default function RegisterPage() {
             setIfFieldEmpty(false);
             }
           }catch(error){
+            console.log(error)
             setErrorInConnect(true);
           }
         }  

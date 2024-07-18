@@ -1,7 +1,7 @@
 from typing import List, Dict
 
 from Server.models.user import User
-from statistics.main import create_clock_pie_chart
+from Statistics.create_chart import create_clock_pie_chart
 
 
 def get_statistics_service(user: User) -> List[Dict[str, float]]:
@@ -38,7 +38,7 @@ def update_statistics_service(user, start_hour, end_hour, unfocused):
         start_index = max(0, min(start_index, len(user.statistics) - 1))
         end_index = max(0, min(end_index, len(user.statistics) - 1))
 
-        # Update the statistics for each cell in the range
+        # Update the Statistics for each cell in the range
         for index in range(start_index, end_index + 1):
             # Distribute unfocused evenly across the intervals
             if index < start_index + num_intervals:

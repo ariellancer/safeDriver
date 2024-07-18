@@ -20,14 +20,14 @@ def get_statistics():
         if not user:
             return jsonify({"error": "Invalid token"}), 401
 
-        # Use the username to fetch statistics or other information
+        # Use the username to fetch Statistics or other information
         # For demonstration, we'll return a dummy response
-            # Use the username to fetch statistics or other information
+            # Use the username to fetch Statistics or other information
             statistics = get_statistics_service(user)
 
             # Create a response object as per client's expectation
             response = {
-                "img": statistics  # Assuming `statistics` is what client expects as `statisticsPic`
+                "img": statistics  # Assuming `Statistics` is what client expects as `statisticsPic`
             }
 
             return jsonify(response), 200

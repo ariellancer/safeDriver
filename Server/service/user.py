@@ -1,5 +1,5 @@
 from mongoengine import DoesNotExist
-from Server.models.user import User, UserModel
+from Server.models.user import User
 
 
 async def add_user_service(firstname: str, lastname: str, username: str, password: str):
@@ -9,19 +9,19 @@ async def add_user_service(firstname: str, lastname: str, username: str, passwor
         return -1  # User already exists
     except DoesNotExist:
 
-        user_data = UserModel(
+        new_user = User(
             username=username,
             password=password,
             firstname=firstname,
             lastname=lastname
         )
         # Create a new user
-        new_user = User(
-            username=user_data.username,
-            password=user_data.password,
-            firstname=user_data.firstname,
-            lastname=user_data.lastname
-        )
+        # new_user = User(
+        #     username=user_data.username,
+        #     password=user_data.password,
+        #     firstname=user_data.firstname,
+        #     lastname=user_data.lastname
+        # )
         new_user.save()
         return 1  # User added successfully
 
