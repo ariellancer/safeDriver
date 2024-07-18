@@ -1,6 +1,6 @@
 from flask import request, jsonify
 
-from Server.service.statistics import update_statistics_service
+from Server.service.statistics import update_statistics_service, get_statistics_service
 from Server.service.token import decode, token_required
 
 
@@ -22,7 +22,15 @@ def get_statistics():
 
         # Use the username to fetch statistics or other information
         # For demonstration, we'll return a dummy response
-        return get_statistics(user)
+            # Use the username to fetch statistics or other information
+            statistics = get_statistics_service(user)
+
+            # Create a response object as per client's expectation
+            response = {
+                "img": statistics  # Assuming `statistics` is what client expects as `statisticsPic`
+            }
+
+            return jsonify(response), 200
 
     except IndexError:
         return jsonify({"error": "Token not found in Authorization header"}), 401

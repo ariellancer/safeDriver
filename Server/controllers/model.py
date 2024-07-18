@@ -1,33 +1,26 @@
 from flask import request, jsonify
 
-from Server.service.token import decode
+from Server.service.model import decode_and_process_pictures
+from Server.service.token import token_required
 
 
-def process_model_request():
+@token_required
+def process_model_request(user):
     try:
-        # Get the Authorization token from the headers
-        token = None
-        if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]
-
-        if not token:
-            return jsonify({'message': 'Token is missing!'}), 401
-
-        # Decode and validate the token
-        decoded_token = decode(token)
-        if not decoded_token:
-            return jsonify({'message': 'Token is invalid!'}), 401
-
         # Extract data from the request body (check)
         data = request.get_json()
-        check = data.get('pictures')
+        pictures_base64 = data.get('pictures')
 
-        # Process the check (pictures array)
-        # For example, you could save it to the database or perform some computation
+        if not pictures_base64:
+            return jsonify({'message': 'No pictures provided!'}), 400
+
+        # Decode and process the pictures using the separate function
+        check = decode_and_process_pictures(user.username, pictures_base64)
+        inverted_result = 1 if check == 0 else 0
 
         return jsonify({
             'message': 'Check processed successfully',
-            'pictures': check
+            'result': inverted_result
         }), 200
 
     except Exception as e:
