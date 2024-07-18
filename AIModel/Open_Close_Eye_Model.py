@@ -62,14 +62,14 @@ def detect(pictures):
     return 1
 
 
-result = 0
-times = 15
-sum_time = 0
-for i in range(times):
-    time.sleep(2)
-    start_time = time.time()
-    result += detect("pictures")
-    end_time = time.time()
-    sum_time += end_time - start_time
-print(f"Result: {result}")
-print(f"Elapsed time: {sum_time / times} seconds")
+# result = 0
+# times = 15
+# sum_time = 0
+# for i in range(times):
+#     time.sleep(2)
+#     start_time = time.time()
+#     result += detect("pic")
+#     end_time = time.time()
+#     sum_time += end_time - start_time
+# print(f"Result: {result}")
+# print(f"Elapsed time: {sum_time / times} seconds")
