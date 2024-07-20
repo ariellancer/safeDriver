@@ -70,10 +70,6 @@ export default function Menu() {
     navigation.navigate('Login');
   };
   const sendToServer = async() => {
-    toSendNew = false; //delete when the server working
-    send = true; //delete when the server working
-    setShowModal(false); //delete when the server working
-    numOfUnfocused = 0; //delete when the server working
     setUpdateCounter(updateCounter + 1);
     const currentDate = new Date();
     var nhour = currentDate.getHours();
@@ -83,11 +79,12 @@ export default function Menu() {
       unfocused:numOfUnfocused
     }
     try{
-      const res = await fetch('http://localhost:5000/api/Statistics/', {
-        'method': 'put',
+      console.log(newDrive)
+      const res = await fetch('https://f0be-2a02-6680-2102-fe54-50af-3888-c260-a148.ngrok-free.app/api/Statistics', {
+        'method': 'PUT',
         'headers':{
             'Content-Type': 'application/json',
-            'authorization': 'bearer ' + token,
+            'authorization': JSON.stringify(token),
         },
         'body': JSON.stringify(newDrive)
     })
@@ -97,6 +94,7 @@ export default function Menu() {
       setShowModal(false);
       numOfUnfocused = 0;
     }else{
+      console.log(res)
       console.error("Error in sending to server")
     }
     }catch(error){
