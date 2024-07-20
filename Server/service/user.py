@@ -32,3 +32,15 @@ async def find_user_service(username: str, password: str):
         return 1
     else:
         return -1
+
+
+async def find_user_by_username_service(username: str):
+    try:
+        user = User.objects(username=username).first()
+        if user:
+            return user
+        else:
+            return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None

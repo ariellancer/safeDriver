@@ -2,37 +2,26 @@ from flask import request, jsonify
 
 from Server.service.statistics import update_statistics_service, get_statistics_service
 from Server.service.token import decode, token_required
+from Server.service.user import find_user_by_username_service
 
 
-def get_statistics():
+async def get_statistics():
     try:
-        headers = dict(request.headers)
-        print(headers)
         auth_header = request.headers.get('authorization')
-        print(auth_header)
+        auth_header = auth_header[19:-8]
         if not auth_header:
             return jsonify({"error": "Authorization header is missing"}), 401
-        # Extract the token from the Authorization header
-        token = auth_header.split(" ")[1]
-        print(token)
-
-        # Decode the token and get the username
-        user = decode(token)
-        print(user)
+        user = decode(auth_header)
+        user = await find_user_by_username_service(user)
         if not user:
             return jsonify({"error": "Invalid token"}), 401
+        statistics = get_statistics_service(user)
+        # Create a response object as per client's expectation
+        response = {
+            "img": statistics  # Assuming `Statistics` is what client expects as `statisticsPic`
+        }
 
-            # Use the username to fetch Statistics or other information
-            # For demonstration, we'll return a dummy response
-            # Use the username to fetch Statistics or other information
-            statistics = get_statistics_service(user)
-
-            # Create a response object as per client's expectation
-            response = {
-                "img": statistics  # Assuming `Statistics` is what client expects as `statisticsPic`
-            }
-
-            return jsonify(response), 200
+        return jsonify(response), 200
 
     except IndexError:
         return jsonify({"error": "Token not found in Authorization header"}), 401

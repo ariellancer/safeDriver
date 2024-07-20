@@ -4,9 +4,8 @@ from Server.models.user import User
 from Statistics.create_chart import create_clock_pie_chart
 
 
-def get_statistics_service(user: User) -> List[Dict[str, float]]:
-    # Return the hour slots as a list of dictionaries
-    return create_clock_pie_chart(user.statistics, 'a')
+def get_statistics_service(user):
+    return create_clock_pie_chart(user.statistics)
 
 
 def update_statistics_service(user, start_hour, end_hour, unfocused):

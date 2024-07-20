@@ -13,6 +13,6 @@ async def token_controller():
     hash_password = hashlib.sha256(salt_password.encode('utf-8')).hexdigest()
     result = await find_user_service(username, hash_password)
     if result == -1:
-        return jsonify(message="Incorrect username and/or password"), 404
+        return jsonify(message="Incorrect username and/or password"), 403
     token = generate_token(username, 'admin')
     return jsonify(token=token), 200

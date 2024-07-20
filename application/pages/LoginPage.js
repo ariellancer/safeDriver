@@ -31,7 +31,7 @@ export default function LoginPage() {
         password: password
       };
       try {
-          const response = await fetch('https://5409-188-64-206-240.ngrok-free.app/api/Login', {
+          const response = await fetch('https://f0be-2a02-6680-2102-fe54-50af-3888-c260-a148.ngrok-free.app/api/Login', {
             method: 'post',
             headers: {
               'Content-Type': 'application/json',
@@ -39,40 +39,33 @@ export default function LoginPage() {
             body: JSON.stringify(forToken)
             });
           if (response.status === 200) {
-            const token = await response.text();
-            navigation.navigate('Menu',{finalSeconds,isDriving,toSend:false,prev:0,token:token,hour:0}); 
             setUsernameEmpty(false);
             setPasswordEmpty(false);
             setPassword("");
             setUsername("");
             setErrorInConnect(false);
             setErrorInLogin(false);
+            const token = await response.text();
+            navigation.navigate('Menu',{finalSeconds,isDriving,toSend:false,prev:0,token:token,hour:0});
+
+          }else if (response.status === 403){
             setErrorInConnect(false);
-            
-          }else if (response.status === 404){
             setErrorInLogin(true);
+          }else if (response.status === 404){
+            setErrorInConnect(true);
           }
+
       } catch (error) {
         setErrorInConnect(true);
         setUsernameEmpty(false);
         setPasswordEmpty(false);
         setPassword("");
         setUsername("");
-        setErrorInConnect(false);
-        setErrorInLogin(false);
-        setErrorInConnect(false);
       }
     }
   };
 
   const navigateToRegister = () => {
-    setUsernameEmpty(false);
-    setPasswordEmpty(false);
-    setPassword("");
-    setUsername("");
-    setErrorInConnect(false);
-    setErrorInLogin(false);
-    setErrorInConnect(false);
     navigation.navigate('Register');
   };
 

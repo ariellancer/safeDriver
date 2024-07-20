@@ -33,19 +33,9 @@ def decode(token: str):
         None: If the token is invalid or expired.
     """
     try:
-        # Decode the token and verify its signature
         decoded_token = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-
-        # Access the username from the decoded token
-        username = decoded_token.get('username')
-        user = User.objects(username=username).first()
-        # Perform any additional validation if necessary
-        if user:
-            return user
-        else:
-            print("Username not found in token")
-            return None
-
+        username = decoded_token['username']
+        return username
     except ExpiredSignatureError:
         print("Token has expired")
         return None

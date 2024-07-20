@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import back from '../tools/back.png';
-import statisticsPic from '../tools/your_statistics.png';
+//import statisticsPic from '../tools/your_statistics.png';
 import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 export default function StatisticsPage () {
   const navigation = useNavigation();
   const route = useRoute();
   var {finalSeconds,isDriving,toSend,prev,token} = route.params;
   const currentDate = new Date();
+  const [statisticsPic, setStatisticsPic] = useState(null);
   prevTimer = currentDate.getTime();
   const navigateToMenu =  () => {
     if(isDriving){
@@ -22,18 +23,19 @@ export default function StatisticsPage () {
   };
   const fetchDataFromServer = async () => {
     try {
-      console.log(token)
-      const res = await fetch('https://5409-188-64-206-240.ngrok-free.app/api/Statistics' , {
+      const res = await fetch('https://f0be-2a02-6680-2102-fe54-50af-3888-c260-a148.ngrok-free.app/api/Statistics' , {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': 'Bearer ' + token,
+          'Authorization': JSON.stringify(token),
         },
       });
       if (res.status === 200) {
-        var data = await res.text();
-        data = JSON.parse(date);
-        statisticsPic=data.img
+//        var data = await res.text();
+//        data = JSON.parse(data);
+          const data = await res.json();
+          const base64Image = `data:image/png;base64,${data.img}`;
+          setStatisticsPic(base64Image);
       } else {
         console.error('Failed to fetch data from the server');
       }
@@ -53,7 +55,9 @@ export default function StatisticsPage () {
           <Image source={back} style={styles.backImage} />
         </TouchableOpacity>
         <Text  style={styles.text} >Your Statistics</Text>
-        <Image source={statisticsPic} style={styles.image} />
+        {statisticsPic && (<Image source={{ uri: statisticsPic }} style={styles.image}
+        />
+      )}
       </View>
     </>
   );
