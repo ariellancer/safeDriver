@@ -1,7 +1,4 @@
-import math
-from typing import List, Dict
 from Server.service.user import find_user_by_username_service
-from Server.models.user import User
 from Statistics.create_chart import create_clock_pie_chart
 
 

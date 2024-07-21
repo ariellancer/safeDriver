@@ -1,7 +1,7 @@
 from flask import request, jsonify
 
 from Server.service.statistics import update_statistics_service, get_statistics_service
-from Server.service.token import decode, token_required
+from Server.service.token import decode
 from Server.service.user import find_user_by_username_service
 
 

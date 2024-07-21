@@ -1,4 +1,4 @@
-from Server.service.user import add_user_service, find_user_service
+from Server.service.user import add_user_service
 from flask import request, jsonify
 from pydantic import ValidationError
 import hashlib

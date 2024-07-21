@@ -15,13 +15,6 @@ async def add_user_service(firstname: str, lastname: str, username: str, passwor
             firstname=firstname,
             lastname=lastname
         )
-        # Create a new user
-        # new_user = User(
-        #     username=user_data.username,
-        #     password=user_data.password,
-        #     firstname=user_data.firstname,
-        #     lastname=user_data.lastname
-        # )
         new_user.save()
         return 1  # User added successfully
 

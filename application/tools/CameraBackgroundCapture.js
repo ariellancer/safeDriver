@@ -46,7 +46,7 @@ const makeBeep = async () => {
             'method': 'get',
             'headers':{
                 'Content-Type': 'application/json',
-                'authorization': 'bearer ' + token,
+                'authorization': JSON.stringify(token),
               },
             'body': JSON.stringify(check)
           })
