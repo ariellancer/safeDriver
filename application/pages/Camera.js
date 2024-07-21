@@ -38,7 +38,6 @@ export default function App() {
   }
   const addUnfocused = ()=>{
     numOfUnfocused+=1;
-    console.log(numOfUnfocused);
     
   }
   function toggleCameraType() {

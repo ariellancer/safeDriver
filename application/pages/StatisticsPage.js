@@ -23,7 +23,7 @@ export default function StatisticsPage () {
   };
   const fetchDataFromServer = async () => {
     try {
-      const res = await fetch('https://f0be-2a02-6680-2102-fe54-50af-3888-c260-a148.ngrok-free.app/api/Statistics' , {
+      const res = await fetch('https://6d42-2a02-6680-2102-fe54-656b-b757-38b9-5c8a.ngrok-free.app/api/Statistics' , {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
@@ -31,8 +31,6 @@ export default function StatisticsPage () {
         },
       });
       if (res.status === 200) {
-//        var data = await res.text();
-//        data = JSON.parse(data);
           const data = await res.json();
           const base64Image = `data:image/png;base64,${data.img}`;
           setStatisticsPic(base64Image);

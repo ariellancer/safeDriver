@@ -12,6 +12,7 @@ export default function Menu() {
   const { finalSeconds, isDriving, toSend, prev,token,hour} = route.params;
   numOfUnfocused = prev ==0 ? 0 : numOfUnfocused<prev ? prev : numOfUnfocused;
   const [showModal, setShowModal] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [updateCounter, setUpdateCounter] = useState(0);
   const currentDate = new Date();
   prevTimer = currentDate.getTime();
@@ -58,7 +59,6 @@ export default function Menu() {
   };
   const addUnfocused = ()=>{
     numOfUnfocused+=1;
-    console.log(numOfUnfocused);
     
   }
   const handleLogout = () => {
@@ -79,8 +79,7 @@ export default function Menu() {
       unfocused:numOfUnfocused
     }
     try{
-      console.log(newDrive)
-      const res = await fetch('https://f0be-2a02-6680-2102-fe54-50af-3888-c260-a148.ngrok-free.app/api/Statistics', {
+      const res = await fetch('https://6d42-2a02-6680-2102-fe54-656b-b757-38b9-5c8a.ngrok-free.app/api/Statistics', {
         'method': 'PUT',
         'headers':{
             'Content-Type': 'application/json',
@@ -91,10 +90,10 @@ export default function Menu() {
     if(res.status ===200){
       toSendNew = false;
       send = true;
+      setUpdate(!update);
       setShowModal(false);
       numOfUnfocused = 0;
     }else{
-      console.log(res)
       console.error("Error in sending to server")
     }
     }catch(error){

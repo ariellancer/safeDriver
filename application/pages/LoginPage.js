@@ -31,7 +31,7 @@ export default function LoginPage() {
         password: password
       };
       try {
-          const response = await fetch('https://f0be-2a02-6680-2102-fe54-50af-3888-c260-a148.ngrok-free.app/api/Login', {
+          const response = await fetch('https://6d42-2a02-6680-2102-fe54-656b-b757-38b9-5c8a.ngrok-free.app/api/Login', {
             method: 'post',
             headers: {
               'Content-Type': 'application/json',

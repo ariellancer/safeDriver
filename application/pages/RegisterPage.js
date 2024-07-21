@@ -47,14 +47,13 @@ export default function RegisterPage() {
             username: username,
             password: password};
        try{
-                const response = await fetch('https://f0be-2a02-6680-2102-fe54-50af-3888-c260-a148.ngrok-free.app/api/Register', {
+                const response = await fetch('https://6d42-2a02-6680-2102-fe54-656b-b757-38b9-5c8a.ngrok-free.app/api/Register', {
                 'method': 'post',
                 'headers':{
                     'Content-Type': 'application/json',
                 },
                 'body': JSON.stringify(newUser)
             })
-         console.log(response)
          if(response.status === 200){
             navigateToLogin();
          }else if(response.status === 403) {

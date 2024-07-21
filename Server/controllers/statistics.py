@@ -35,9 +35,9 @@ async def update_statistics():
         if not token:
             return jsonify({"error": "Authorization header is missing"}), 401
         data = request.get_json()
-        start = data['start'] + 21
+        start = data['start']
         end = data['end']
-        unfocused = data['unfocused'] + 11
+        unfocused = data['unfocused']
         hours_per_cell = 2
         unfocused_array = [0 for i in range(12)]
         total_hours = (end - start) % 24 + 1
