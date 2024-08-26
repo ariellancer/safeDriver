@@ -23,7 +23,7 @@ export default function StatisticsPage () {
   };
   const fetchDataFromServer = async () => {
     try {
-      const res = await fetch('https://6d42-2a02-6680-2102-fe54-656b-b757-38b9-5c8a.ngrok-free.app/api/Statistics' , {
+      const res = await fetch('https://7ca1-2a05-bb80-8-f754-8d10-216f-1333-8db7.ngrok-free.app/api/Statistics' , {
         method: 'get',
         headers: {
           'Content-Type': 'application/json',

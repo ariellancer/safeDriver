@@ -18,12 +18,10 @@ async def process_model_request():
         if not user:
             return jsonify({"error": "Authorization header is missing"}), 401
         user = await find_user_by_username_service(user)
-        check = decode_and_process_pictures(user.username, pictures_base64)
-        inverted_result = 1 if check == 0 else 0
-
+        check = decode_and_process_pictures(user.username, pictures_base64) ## 0 beep
         return jsonify({
             'message': 'Check processed successfully',
-            'result': inverted_result
+            'result': check
         }), 200
 
     except Exception as e:

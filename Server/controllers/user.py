@@ -28,5 +28,4 @@ async def add_user_controller():
         return jsonify({'errors': e.errors()}), 400
 
     except Exception as e:
-        print(e)
         return jsonify({'error': str(e)}), 500

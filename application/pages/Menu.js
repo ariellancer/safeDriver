@@ -1,8 +1,8 @@
-import React, { useEffect, useRef,useState } from 'react';
+import React from 'react';
+import { useEffect, useRef,useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import { useNavigation ,useRoute} from '@react-navigation/native';
 import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
-import { Camera } from 'expo-camera';
 var numOfUnfocused = 0;
 var toSendNew = true
 send = false;
@@ -79,7 +79,7 @@ export default function Menu() {
       unfocused:numOfUnfocused
     }
     try{
-      const res = await fetch('https://6d42-2a02-6680-2102-fe54-656b-b757-38b9-5c8a.ngrok-free.app/api/Statistics', {
+      const res = await fetch('https://7ca1-2a05-bb80-8-f754-8d10-216f-1333-8db7.ngrok-free.app/api/Statistics', {
         'method': 'PUT',
         'headers':{
             'Content-Type': 'application/json',
@@ -132,7 +132,6 @@ export default function Menu() {
         <CameraBackgroundCapture
           updateVal={addUnfocused}
           style={{ position: 'absolute', bottom: 0, left: 0, width: 150, height: 200 }}
-          type={Camera.Constants.Type.back}
           token={token}
         />
       )}

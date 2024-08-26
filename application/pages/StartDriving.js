@@ -49,7 +49,7 @@ export default function StartDriving() {
     newFinalSeconds = 0;
     prevTime = currentDate.getTime();
     toAdd = true;
-    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:false,prev :0,token,hour:nhour})
+    navigation.navigate('Menu',{finalSeconds:newFinalSeconds,isDriving:isDrivingNew,toSend:false,prev:0,token:token,hour:nhour})
   };
   const handleEndDriving = () => {
     isDrivingNew = false;

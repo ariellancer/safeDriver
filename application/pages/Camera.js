@@ -1,16 +1,19 @@
-import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
+
+import { Camera, CameraType } from 'expo-camera/legacy';
+import { useState ,useEffect} from 'react';
 import { Pressable,Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
+import { useIsFocused } from '@react-navigation/native';
+
 var numOfUnfocused = 0;
 newFinalSeconds=0
 export default function App() {
   const navigation = useNavigation();
-  const [type, setType] = useState(CameraType.front);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
   const route = useRoute();
   var {finalSeconds,isDriving,toSend,prev,token,prevTimer} = route.params;
+  const [type, setType] = useState(CameraType.front);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
   numOfUnfocused = prev;
   const navigateToMenu = () => {
     if(isDriving){
@@ -19,15 +22,14 @@ export default function App() {
       newFinalSeconds = finalSeconds + Math.floor((currentTimer - prevTimer)/1000);
     }else{
       newFinalSeconds = finalSeconds;
-    } 
+    }
     navigation.navigate('Menu',{finalSeconds: newFinalSeconds,isDriving,toSend,prev:numOfUnfocused,token});
   };
-  if (!permission) {
-    // Camera permissions are still loading
+   if (!permission) {
+    // Camera permissions are still loading.
     return <View />;
   }
-
-  if (!permission.granted) {
+   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
@@ -35,10 +37,10 @@ export default function App() {
         <Button onPress={requestPermission} title="grant permission" />
       </View>
     );
-  }
+    }
+
   const addUnfocused = ()=>{
     numOfUnfocused+=1;
-    
   }
   function toggleCameraType() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
