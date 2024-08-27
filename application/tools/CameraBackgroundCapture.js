@@ -2,9 +2,9 @@ import React, { useEffect, useRef,useState } from 'react';
 import { Platform,StyleSheet } from 'react-native';
 import { Camera, CameraType } from 'expo-camera/legacy';
 import { Audio } from 'expo-av';
-const CameraBackgroundCapture = ({updateVal,style,token}) => {
-const [type, setType] = useState(CameraType.front); // change to front
-const cameraRef = useRef(null);
+const CameraBackgroundCapture = ({updateVal,style,type,token}) => {
+  const [currentType, setType] = useState(type); // change to front
+  const cameraRef = useRef(null);
 // Function to make the phone beep
 const makeBeep = async () => {
   const soundObject = new Audio.Sound();
@@ -43,7 +43,7 @@ const makeBeep = async () => {
           const check = {
             pictures:pictures
           }
-          const res = await fetch('https://7ca1-2a05-bb80-8-f754-8d10-216f-1333-8db7.ngrok-free.app/api/Model', {
+          const res = await fetch('https://03e2-2a05-bb80-8-f754-a5c1-dde5-fd22-db4a.ngrok-free.app/api/Model', {
             'method': 'POST',
             'headers':{
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const makeBeep = async () => {
 <Camera
   ref={cameraRef}
   style={style}
-  type={type}
+  type={currentType}
 />
   );
 };

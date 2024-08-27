@@ -47,7 +47,7 @@ export default function RegisterPage() {
             username: username,
             password: password};
        try{
-                const response = await fetch('https://7ca1-2a05-bb80-8-f754-8d10-216f-1333-8db7.ngrok-free.app/api/Register', {
+                const response = await fetch('https://03e2-2a05-bb80-8-f754-a5c1-dde5-fd22-db4a.ngrok-free.app/api/Register', {
                 'method': 'post',
                 'headers':{
                     'Content-Type': 'application/json',
