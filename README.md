@@ -1,7 +1,7 @@
 # Safe Drive:
 
 ## Overview
-Safe Drive is a driving safety application developed by Lidor, Omer, and Ariel, the three founders of the platform. It allows drivers to register, log in, and access their driving statistics. The app provides warnings when it detects drowsiness or distraction, helping users maintain safe driving habits. Safe Drive offers the opportunity to drive safely and at optimal times of the day
+Safe Drive is a driving safety application developed by Lidor, Omer, and Ariel, the three founders of the platform. The application supports both Android and iOS devices. It allows drivers to register, log in, and access their driving statistics. The app provides warnings when it detects drowsiness or distraction, helping users maintain safe driving habits. Safe Drive offers the opportunity to drive safely and at optimal times of the day
 ## Features
 
 - User Registration: Create an account by providing your firstname ,lastname ,username and password.
@@ -12,7 +12,9 @@ Safe Drive is a driving safety application developed by Lidor, Omer, and Ariel, 
 
 - Statistics Page: Displays your optimal driving hours, highlighting the times of day when you are most focused.
 
-- Driving page: show you the how mach time you drive in this driving and count the num of unfocus that he detect in this driving
+- Driving page: show you the how mach time you drive in this driving and count the num of unfocus that he detect in this driving.
+
+- Camera Direction Page: This page activates the camera, allowing you to position it in front of you. It also provides the option to switch between the front and back cameras on your phone.
 
 - Real-time Warning: The application uses an AI model to detect drowsiness or distraction while driving and alerts the driver with a beep.
 
@@ -28,58 +30,39 @@ Safe Drive is a driving safety application developed by Lidor, Omer, and Ariel, 
 
 
 
-### Web App
+### Application
 
 #### Registration Page
-![register](https://github.com/lidormoryosef/Chat/assets/118112616/268fb219-ba60-4267-a550-00fe2ae9e273)
-
-
-#### Login Page
-![login](https://github.com/lidormoryosef/Chat/assets/118112616/ab9dea8e-affa-4989-9821-1785dcdb7564)
-
-
-#### Chat Interface
-![Chat](https://github.com/lidormoryosef/Chat/assets/118112616/fc705ddb-a808-4a8f-80ca-9491d4ba655f)
-
-
-### Android App
-
-#### Registration Page
-![Registration](https://github.com/lidormoryosef/Chat-Web-Android-/assets/118112616/be9f6e13-486d-4f14-b7d7-b05ae3cc9fe3)
+![register](https://github.com/user-attachments/assets/f1a6457a-709b-42cd-a770-735da08db56b)
 
 #### Login Page
-![Login](https://github.com/lidormoryosef/Chat-Web-Android-/assets/118112616/4f843326-624c-4744-8279-c33dab1a3777)
-
-
-#### Settings Page
-![Settings](https://github.com/lidormoryosef/Chat-Web-Android-/assets/118112616/5207fff5-29ac-4bd4-8468-b3be9ff4d0e5)
-
-
-#### Chat Interface (Various Scenarios)
-![AndroidChat1](https://github.com/lidormoryosef/Chat/assets/118112616/7e2c5a10-f16a-4564-b580-3ca107b3ee79)
-![AndroidChat2](https://github.com/lidormoryosef/Chat/assets/118112616/4c113eda-0a59-4d40-af70-d9e0b6071e7c)
-![AndroidChat3](https://github.com/lidormoryosef/Chat/assets/118112616/5ac9ca45-4e24-452b-9af8-287068c3a8c1)
+![login](https://github.com/user-attachments/assets/94da1866-70fc-499f-8778-40891d8e81a9)
 
 
 
+#### Menu
+![menu](https://github.com/user-attachments/assets/90d73f65-39ea-4877-ba9b-e6bc4559ca17)
+![menu2](https://github.com/user-attachments/assets/91e258ad-003c-4eb9-adf5-2d7911379ac5)
+![menu3](https://github.com/user-attachments/assets/d2271f1d-0a9a-4c82-8302-bd9a416fe023)
 
 
+#### Driving page
+![start](https://github.com/user-attachments/assets/d06ad16d-4be3-4bec-b41d-8ec84a2a359c)
 
 
-
-#### Adding Contact Page
-![Add](https://github.com/lidormoryosef/Chat-Web-Android-/assets/118112616/3d972d16-fc58-48cf-ae03-f24c77efb21d)
+#### Statistics page
+![statistics](https://github.com/user-attachments/assets/4c35de21-d6ac-4d22-ab9c-a8c56142f48a)
 
 
 ## How to Run 
 
-### To run the LOL-chat application (Web version), follow these steps:
+### To run the safe driver application, follow these steps:
 
 1. Clone the project repository to your local machine.
 
 2. Open the terminal or command prompt and navigate to the server's directory.
 
-3. Install the required dependencies by running the following command: `npm install`.
+3. Running the following command: `python app.py` , .
 
 4. Start the application by running the following command: `node app.js`.
 
