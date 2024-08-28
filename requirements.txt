@@ -46,3 +46,5 @@ ultralytics==8.2.26
 ultralytics==8.2.41
 ultralytics_thop==2.0.0
 x2paddle==1.4.1
+Flask
+mongoengine
