@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import { Platform } from 'react-native';
-import { Camera ,CameraType } from 'expo-camera';
+import React, { useEffect, useRef,useState } from 'react';
+import { Platform,StyleSheet } from 'react-native';
+import { Camera, CameraType } from 'expo-camera/legacy';
 import { Audio } from 'expo-av';
 const CameraBackgroundCapture = ({updateVal,style,type,token}) => {
-const cameraRef = useRef(null);
+  const [currentType, setType] = useState(type); // change to front
+  const cameraRef = useRef(null);
 // Function to make the phone beep
 const makeBeep = async () => {
   const soundObject = new Audio.Sound();
@@ -30,7 +31,7 @@ const makeBeep = async () => {
       }
       try{
       if (cameraRef.current) {
-        const options = { quality: 0.5, base64: true };
+        const options = { quality: 1, base64: true };
         var pictures =[]
         for (let i = 0; i < 3; i++) {
           const data = await cameraRef.current.takePictureAsync(options);
@@ -42,18 +43,19 @@ const makeBeep = async () => {
           const check = {
             pictures:pictures
           }
-          const res = await fetch('http://localhost:5000/api/Model/', {
-            'method': 'get',
+          const res = await fetch('https://d35c-2a05-bb80-7-83c4-8c69-3c08-fe52-a2c1.ngrok-free.app/api/Model', {
+            'method': 'POST',
             'headers':{
                 'Content-Type': 'application/json',
-                'authorization': 'bearer ' + token,
+                'authorization': JSON.stringify(token),
               },
             'body': JSON.stringify(check)
           })
           if(res.status === 200){
             var temp = await res.text();
             temp = JSON.parse(temp);
-            if(temp.result === 1){
+            console.log(temp.result)
+            if(temp.result === 0){
               updateVal();
               makeBeep();
             }
@@ -61,8 +63,6 @@ const makeBeep = async () => {
       }catch(error){
         console.log(error);
       }
-      updateVal(); //delete
-      makeBeep(); //delete
       }
     }catch(error){
       console.log("error back")
@@ -81,10 +81,8 @@ const makeBeep = async () => {
 <Camera
   ref={cameraRef}
   style={style}
-  type={type}
+  type={currentType}
 />
-
   );
 };
-
 export default CameraBackgroundCapture;

@@ -8,7 +8,6 @@ def decode_and_process_pictures(username, pictures_base64):
     user_directory = f'./user_data/{username}'
     if not os.path.exists(user_directory):
         os.makedirs(user_directory)
-
     for idx, picture_base64 in enumerate(pictures_base64):
         try:
             # Decode the Base64-encoded picture

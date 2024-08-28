@@ -1,9 +1,6 @@
-from functools import wraps
 
-from flask import request, jsonify
-from jwt import ExpiredSignatureError, InvalidTokenError
-
-from Server.models.user import User
+from jwt import InvalidTokenError
+from jwt.exceptions import ExpiredSignatureError
 import jwt
 import datetime
 
@@ -32,19 +29,9 @@ def decode(token: str):
         None: If the token is invalid or expired.
     """
     try:
-        # Decode the token and verify its signature
         decoded_token = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-
-        # Access the username from the decoded token
-        username = decoded_token.get('username')
-        user = User.objects(username=username).first()
-        # Perform any additional validation if necessary
-        if user:
-            return user
-        else:
-            print("Username not found in token")
-            return None
-
+        username = decoded_token['username']
+        return username
     except ExpiredSignatureError:
         print("Token has expired")
         return None
@@ -58,23 +45,3 @@ def decode(token: str):
         return None
 
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = None
-        if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]
-
-        if not token:
-            return jsonify({'message': 'Token is missing!'}), 401
-
-        try:
-            user = decode(token)
-            if user is None:
-                return jsonify({'message': 'Token is invalid!'}), 401
-        except Exception as e:
-            return jsonify({'message': str(e)}), 500
-
-        return f(user, *args, **kwargs)
-
-    return decorated

@@ -47,7 +47,7 @@ export default function RegisterPage() {
             username: username,
             password: password};
        try{
-                const response = await fetch('http://localhost:5000/api/Register', {
+                const response = await fetch('https://d35c-2a05-bb80-7-83c4-8c69-3c08-fe52-a2c1.ngrok-free.app/api/Register', {
                 'method': 'post',
                 'headers':{
                     'Content-Type': 'application/json',
@@ -56,12 +56,19 @@ export default function RegisterPage() {
             })
          if(response.status === 200){
             navigateToLogin();
-         }else if(response.status === 404) {
+         }else if(response.status === 403) {
             setIsExists(true);
             setIfFieldEmpty(false);
-            }
-          }catch(error){
+            setErrorInConnect(false);
+         }else if(response.status === 404) {
             setErrorInConnect(true);
+            setIsExists(false);
+         }
+
+      }catch(error){
+            console.log(error)
+            setErrorInConnect(true);
+            setIsExists(false);
           }
         }  
         else {
