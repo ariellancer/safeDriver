@@ -1,7 +1,7 @@
-# Safe Drive:
+# Safe Driver:
 
 ## Overview
-Safe Drive is a driving safety application developed by Lidor, Omer, and Ariel, the three founders of the platform. The application supports both Android and iOS devices. It allows drivers to register, log in, and access their driving statistics. The app provides warnings when it detects drowsiness or distraction, helping users maintain safe driving habits. Safe Drive offers the opportunity to drive safely and at optimal times of the day
+Safe Driver is a driving safety application developed by Lidor, Omer, and Ariel, the three founders of the platform. The application supports both Android and iOS devices. It allows drivers to register, log in, and access their driving statistics. The app provides warnings when it detects drowsiness or distraction, helping users maintain safe driving habits. Safe Driver offers the opportunity to drive safely and at optimal times of the day
 ## Features
 
 - User Registration: Create an account by providing your firstname ,lastname ,username and password.
@@ -48,6 +48,7 @@ Safe Drive is a driving safety application developed by Lidor, Omer, and Ariel, 
 
 #### Driving page
 ![start](https://github.com/user-attachments/assets/d06ad16d-4be3-4bec-b41d-8ec84a2a359c)
+![end](https://github.com/user-attachments/assets/6d7f8ca6-e33c-48bc-98ea-1f9c839a4171)
 
 
 #### Statistics page
@@ -62,39 +63,30 @@ Safe Drive is a driving safety application developed by Lidor, Omer, and Ariel, 
 
 2. Open the terminal or command prompt and navigate to the server's directory.
 
-3. Running the following command: `python app.py` , .
+3. Install the required dependencies by running the following command: `pip install -r requirements.txt`
 
-4. Start the application by running the following command: `node app.js`.
+4. Running the following command: `python app.py`.
 
-5. Once the server is running, open any web browser and navigate to [http://localhost:5000](http://localhost:5000).
+5. Navigate to the application directory.
 
-6. You will be directed to the registration page, where you can either create a new account or log in if you already have one.
+6. Install the required dependencies by running the following command: `npm install`.
 
-7. After successful registration or login, you will enter the chat interface and can start interacting with other users in real-time.
+7. Start the application by running the following command: `npm start`.
 
-### To run the LOL-chat application (Android version), follow these steps:
+8. Once the application is running, open the camera on your phone and scan the QR code. It will open the application.
 
-1. Clone the project repository to your local machine.
+9. You will be directed to the registration page, where you can either create a new account or log in if you already have one.
 
-2. Open the terminal or command prompt and navigate to the server's directory.
+10 .After successful registration or login, you will be taken to the menu interface where you can start using the application.
 
-3. Install the required dependencies by running the following command: `npm install`.
-
-4. Start the application by running the following command: `node app.js`.
-
-5. Once the server is running, open the "android" directory using Android Studio.
-
-6. Run the application on either an emulator or an Android phone.
-
-7. In the login page, update the IP address in the settings to match your current IP. If you are using an emulator, the IP should be set to the default value for the emulator - 10.0.2.2.
 
 ## Database
 
-LOL-chat utilizes MongoDB as its database to store user and chat information. MongoDB is a popular NoSQL database known for its scalability and flexibility in managing data.
+Safe Driver utilizes MongoDB as its database to store users and statistics information. MongoDB is a popular NoSQL database known for its scalability and flexibility in managing data.
 
 ### Using MongoDB
 
-To use MongoDB with LOL-chat, follow these steps:
+To use MongoDB with Safe Driver, follow these steps:
 
 1. Visit the [MongoDB website](https://www.mongodb.com/) and download the latest version of MongoDB suitable for your operating system.
 
@@ -102,14 +94,16 @@ To use MongoDB with LOL-chat, follow these steps:
 
 3. Start MongoDB by running the appropriate command for your operating system.
 
-4. LOL-chat will automatically connect to the running MongoDB instance and use it to store and retrieve data.
+4. Safe Driver will automatically connect to the running MongoDB instance and use it to store and retrieve data.
 
 ## Requirements
 
-Before running LOL-chat, ensure that you have the following requirements fulfilled:
+Before running Safe Driver, ensure that you have the following requirements fulfilled:
 
-1. Node.js: Make sure you have Node.js installed on your system. You can download and install Node.js from the official website: [https://nodejs.org](https://nodejs.org)
+1. yolov5: To clone YOLOv5, navigate to the AIModel directory and run the following command: `git clone https://github.com/ultralytics/yolov5.git`. 
 
-2. MongoDB: Install MongoDB to set up the database for LOL-chat. Follow the steps mentioned in the "Using MongoDB" section above to install and configure MongoDB.
+2. MongoDB: Install MongoDB to set up the database for Safe Driver. Follow the steps mentioned in the "Using MongoDB" section above to install and configure MongoDB.
 
-You are now all set to run LOL-chat and dive into the world of real-time chatting and connections! Happy chatting!
+3. Expo Go: Install the Expo Go application on your phone. You can then use Expo Go to run the Safe Driver application..
+
+You are now all set to run Safe Driver and explore the world of safe driving! Take care and drive safely!
