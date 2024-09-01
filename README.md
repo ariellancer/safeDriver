@@ -29,6 +29,9 @@ Safe Driver is a driving safety application developed by Lidor, Omer, and Ariel,
 ## Promotional video
 
 
+## Diagrama
+
+![Safe Drive Project Kickoff](https://github.com/user-attachments/assets/383368f5-1bf2-4675-a070-9272e187e588)
 
 ### Application
 
