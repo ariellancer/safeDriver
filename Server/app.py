@@ -1,10 +1,12 @@
 import sys
 import os
+
 myDir = os.getcwd()
 sys.path.append(myDir)
 from pathlib import Path
+
 path = Path(myDir)
-a=str(path.parent.absolute())
+a = str(path.parent.absolute())
 sys.path.append(a)
 
 from flask import Flask
@@ -15,12 +17,10 @@ from routes.statistics import get_statistics_bp, put_statistics_bp
 from routes.user import register_bp
 from routes.token import login_bp
 
-# from controllers.user import add_user_controller
-# Connect to MongoDB (replace with your own connection string)
-connect('mydatabase', host='localhost', port=27017)
+# Connect to MongoDB
+connect('SafeDriveDataBase', host='localhost', port=27017)
 
 app = Flask(__name__)
-# Register the blueprints
 
 
 app.register_blueprint(register_bp, url_prefix='/api')

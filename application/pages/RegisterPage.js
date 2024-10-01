@@ -30,56 +30,52 @@ export default function RegisterPage() {
     navigation.navigate('Login');
   } 
   async function handleRegister(){
-    if(firstname.trim() === '' || lastname.trim() === '' || username.trim() === '' || password.trim() === '' || repeatPassword.trim() === '')
-      {
+    if(firstname.trim() === '' || lastname.trim() === '' || username.trim() === '' || password.trim() === '' || repeatPassword.trim() === ''){
         setIfFieldEmpty(true);
-      }
+    }
     else{ 
-      setIfFieldEmpty(false);
-      if (regex.test(password))
-      {
-        setPasswordLegal(true)
-        if (password.trim() ===  repeatPassword.trim()){
-          setNotSamePassword(false);
-          const newUser = {
-            firstname: firstname,
-            lastname: lastname,
-            username: username,
-            password: password};
-       try{
-                const response = await fetch('https://d35c-2a05-bb80-7-83c4-8c69-3c08-fe52-a2c1.ngrok-free.app/api/Register', {
-                'method': 'post',
-                'headers':{
-                    'Content-Type': 'application/json',
-                },
-                'body': JSON.stringify(newUser)
-            })
-         if(response.status === 200){
-            navigateToLogin();
-         }else if(response.status === 403) {
-            setIsExists(true);
-            setIfFieldEmpty(false);
-            setErrorInConnect(false);
-         }else if(response.status === 404) {
-            setErrorInConnect(true);
-            setIsExists(false);
-         }
-
-      }catch(error){
-            console.log(error)
-            setErrorInConnect(true);
-            setIsExists(false);
-          }
-        }  
-        else {
-          setNotSamePassword(true);
-        }
+        setIfFieldEmpty(false);
+        if (regex.test(password)){
+            setPasswordLegal(true);
+            if (password.trim() ===  repeatPassword.trim()){
+                setNotSamePassword(false);
+                const newUser = {
+                    firstname: firstname,
+                    lastname: lastname,
+                    username: username,
+                    password: password
+                };
+                try{
+                    const response = await fetch('https://3e10-2a05-bb80-3a-8cba-c86b-65f0-97e-2b19.ngrok-free.app/api/Register', {
+                    'method': 'post',
+                    'headers':{
+                        'Content-Type': 'application/json',
+                    },
+                    'body': JSON.stringify(newUser)
+                    })
+                    if(response.status === 200){
+                        navigateToLogin();
+                    }else if(response.status === 409) { // username is exist
+                        setIsExists(true);
+                        setIfFieldEmpty(false);
+                        setErrorInConnect(false);
+                    }else if(response.status === 400 || response.status === 500){
+                        setErrorInConnect(true);
+                        setIsExists(false);
+                    }
+                }catch(error){ // error to sending to server
+                    console.log(error)
+                    setErrorInConnect(true);
+                    setIsExists(false);
+                }
+            }else {
+              setNotSamePassword(true);
+            }
       }else{
         setPasswordLegal(false);
       }
     }   
   };
-
   return (
     <>
     <ScrollView contentContainerStyle={styles.scrollContainer}>

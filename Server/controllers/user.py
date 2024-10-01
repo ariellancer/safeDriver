@@ -20,12 +20,12 @@ async def add_user_controller():
         )
 
         if result == -1:
-            return jsonify({'message': 'User already exists'}), 403
+            return jsonify({'message': 'User already exists'}), 409
 
         return jsonify({'message': 'User registered successfully'}), 200
 
     except ValidationError as e:
-        return jsonify({'errors': e.errors()}), 400
+        return jsonify({'error': e.errors()}), 400
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500

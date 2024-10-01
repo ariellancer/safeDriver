@@ -4,10 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import Menu from './pages/Menu'
-import StartDriving from './pages/StartDriving'
+import Menu from './pages/MenuPage'
+import StartDriving from './pages/StartDrivingPage'
 import StatisticsPage from './pages/StatisticsPage'
-import Camera from './pages/Camera'
+import Camera from './pages/CameraPage'
 import 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();

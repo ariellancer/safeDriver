@@ -1,6 +1,6 @@
 import {React, useState} from 'react';
 import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import LoginImage from '../tools/loginandregister.jpg';
 import 'react-native-gesture-handler';
 import {CameraType} from "expo-camera/legacy";
@@ -8,7 +8,6 @@ import {CameraType} from "expo-camera/legacy";
 
 export default function LoginPage() {
     const navigation = useNavigation();
-    const route = useRoute();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [usernameEmpty, setUsernameEmpty] = useState(false);
@@ -17,7 +16,6 @@ export default function LoginPage() {
     const [errorInConnect, setErrorInConnect] = useState(false);
     var finalSeconds = 0;
     var isDriving = false;
-
     async function send() {
         if (username.trim() === '' || password.trim() === '') {
             if (username.trim() === '')
@@ -26,16 +24,15 @@ export default function LoginPage() {
                 setPasswordEmpty(true);
             setErrorInLogin(false);
             setErrorInConnect(false);
-        } else {
+        } else{
             setUsernameEmpty(false);
             setPasswordEmpty(false);
-
             const forToken = {
                 username: username,
                 password: password
             };
             try {
-                const response = await fetch('https://d35c-2a05-bb80-7-83c4-8c69-3c08-fe52-a2c1.ngrok-free.app/api/Login', {
+                const response = await fetch('https://3e10-2a05-bb80-3a-8cba-c86b-65f0-97e-2b19.ngrok-free.app/api/Login', {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
@@ -60,14 +57,14 @@ export default function LoginPage() {
                         type: CameraType.front
                     });
 
-                } else if (response.status === 403) {
+                } else if (response.status === 401) { // username or password are incorrect
                     setErrorInConnect(false);
                     setErrorInLogin(true);
-                } else if (response.status === 404) {
+                }else if (response.status === 500){
                     setErrorInConnect(true);
+                    setErrorInLogin(false);
                 }
-
-            } catch (error) {
+            } catch (error) { // error in sending to server.
                 setErrorInConnect(true);
                 setUsernameEmpty(false);
                 setPasswordEmpty(false);

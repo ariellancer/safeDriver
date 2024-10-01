@@ -7,7 +7,7 @@ import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
 var numOfUnfocused = 0;
 var toSendNew = true
 send = false;
-export default function Menu() {
+export default function MenuPage() {
     const navigation = useNavigation();
     const route = useRoute();
     const {finalSeconds, isDriving, toSend, prev, token, hour,type} = route.params;
@@ -96,7 +96,7 @@ export default function Menu() {
             unfocused: numOfUnfocused
         }
         try {
-            const res = await fetch('https://d35c-2a05-bb80-7-83c4-8c69-3c08-fe52-a2c1.ngrok-free.app/api/Statistics', {
+            const res = await fetch('https://3e10-2a05-bb80-3a-8cba-c86b-65f0-97e-2b19.ngrok-free.app/api/Statistics', {
                 'method': 'PUT',
                 'headers': {
                     'Content-Type': 'application/json',
