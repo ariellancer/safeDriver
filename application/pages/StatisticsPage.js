@@ -4,6 +4,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import back from '../tools/back.png';
 //import statisticsPic from '../tools/your_statistics.png';
 import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
+import {BASE_URL} from "../config";
 
 export default function StatisticsPage() {
     const navigation = useNavigation();
@@ -24,7 +25,7 @@ export default function StatisticsPage() {
     };
     const fetchDataFromServer = async () => {
         try {
-            const res = await fetch('https://d35c-2a05-bb80-7-83c4-8c69-3c08-fe52-a2c1.ngrok-free.app/api/Statistics', {
+            const res = await fetch(`${BASE_URL}/api/Statistics`, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json',

@@ -3,7 +3,6 @@ from Statistics.create_chart import create_clock_pie_chart
 
 
 def get_statistics_service(user):
-    print(user.statistics)
     return create_clock_pie_chart(user.statistics)
 
 

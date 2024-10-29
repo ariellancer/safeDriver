@@ -7,16 +7,15 @@ isDrivingNew = false;
 toAdd = true
 number = 0;
 nhour = 0
-export default function StartDriving() {
+export default function StartDrivingPage() {
     const navigation = useNavigation();
     const route = useRoute();
     const {finalSeconds, isDriving, prev, token,type} = route.params;
-
-    if (toAdd) {
+    if (toAdd) { // make sure that happen once.
         toAdd = false;
         newFinalSeconds = finalSeconds;
     }
-    const [timeNew, setTime] = useState({
+    const [timeNew, setTime] = useState({ // init the prev time to stopper.
         seconds: newFinalSeconds,
         minutes: Math.floor(newFinalSeconds / 60),
         hours: Math.floor(newFinalSeconds / 3600)
@@ -25,7 +24,7 @@ export default function StartDriving() {
     prevTimer = currentDate.getTime();
     useEffect(() => {
         let timeoutId;
-        const updateTimer = () => {
+        const updateTimer = () => { // update the time in stopper
             setTime((prevTime) => {
                 const currentDate = new Date();
                 currentTimer = currentDate.getTime();
@@ -37,7 +36,7 @@ export default function StartDriving() {
                     hours: Math.floor(newFinalSeconds / 3600),
                 };
             });
-            timeoutId = setTimeout(updateTimer, 1000);
+            timeoutId = setTimeout(updateTimer, 1000); // play every second.
         };
         if (isDrivingNew) {
             updateTimer();

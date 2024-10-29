@@ -7,30 +7,33 @@ from Server.service.user import find_user_by_username_service
 
 async def get_statistics():
     try:
+        # extract token from request
         auth_header = request.headers.get('authorization')
         token = auth_header[19:-8]
+        # extract username from token
         user = decode(token)
         if not user:
-            return jsonify({"error": "Authorization header is missing"}), 401
+            return jsonify({"error": "Invalid token"}), 401
+        # find user data
         user = await find_user_by_username_service(user)
         if not user:
-            return jsonify({"error": "Invalid token"}), 401
+            return jsonify({"error": "Invalid token"}), 404
+        # create chart statistics
         statistics = get_statistics_service(user)
-        # Create a response object as per client's expectation
         response = {
-            "img": statistics  # Assuming `Statistics` is what client expects as `statisticsPic`
+            "img": statistics
         }
-
         return jsonify(response), 200
-
     except IndexError:
         return jsonify({"error": "Token not found in Authorization header"}), 401
 
 
 async def update_statistics():
     try:
+        # extract token from request
         auth_header = request.headers.get('authorization')
         token = auth_header[19:-8]
+        # extract username from token
         username = decode(token)
         if not token:
             return jsonify({"error": "Authorization header is missing"}), 401

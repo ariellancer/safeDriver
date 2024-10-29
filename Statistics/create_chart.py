@@ -5,7 +5,8 @@ import base64
 
 from matplotlib.patches import Patch
 
-matplotlib.use('Agg')  # Use the Agg backend, which is non-interactive and suitable for saving figuresimport matplotlib.pyplot as plt
+matplotlib.use(
+    'Agg')  # Use the Agg backend, which is non-interactive and suitable for saving figuresimport matplotlib.pyplot as plt
 
 
 def create_clock_pie_chart(data):
@@ -20,16 +21,16 @@ def create_clock_pie_chart(data):
     percentiles = data.copy()
     percentiles = sorted(percentiles)
     thresholds = [percentiles[2], percentiles[5], percentiles[8]]
-    data.reverse()
+    data.reverse()  ##to make with clockwise
     for value in data:
         if value <= thresholds[0]:
-            colors.append('#3f007d')  # Very Dark Purple
-        elif value <= thresholds[1]:
-            colors.append('#7a5299')  # Dark Purple
-        elif value <= thresholds[2]:
-            colors.append('#b3a2c7')  # Medium Purple
-        else:
             colors.append('#d9d2e9')  # Light Purple
+        elif value <= thresholds[1]:
+            colors.append('#b3a2c7')  # Medium Purple
+        elif value <= thresholds[2]:
+            colors.append('#7a5299')  # Dark Purple
+        else:
+            colors.append('#3f007d')  # Very Dark Purple
     # Create pie chart
     plt.figure(figsize=(5, 5))  # Adjusted for a 5.5-inch phone display
     plt.pie(equal_values, startangle=90, colors=colors)
@@ -48,7 +49,7 @@ def create_clock_pie_chart(data):
     legend_labels = ['You are very focused', 'Slightly tired, suggested to bring a snack',
                      'You are somewhat tired suggested driving with a friend',
                      'You are exhausted, do not get on the road']
-    legend_colors = ['#3f007d', '#7a5299', '#b3a2c7', '#d9d2e9']
+    legend_colors = ['#d9d2e9', '#b3a2c7', '#7a5299', '#3f007d']
     patches = [Patch(color=color, label=label) for color, label in zip(legend_colors, legend_labels)]
     plt.legend(handles=patches, loc='upper right', bbox_to_anchor=(0.92, 0.05), fontsize=8)
 

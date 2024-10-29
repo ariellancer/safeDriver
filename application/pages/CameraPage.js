@@ -7,15 +7,15 @@ import {useIsFocused} from '@react-navigation/native';
 
 var numOfUnfocused = 0;
 newFinalSeconds = 0
-export default function App() {
+export default function CameraPage() {
     const navigation = useNavigation();
     const route = useRoute();
     var {finalSeconds, isDriving, toSend, prev, token, prevTimer,prevType} = route.params;
-    const [type, setType] = useState(prevType);
+    const [type, setType] = useState(prevType); // Type camera (front or back)
     const [permission, requestPermission] = Camera.useCameraPermissions();
     numOfUnfocused = prev;
     const navigateToMenu = () => {
-        if (isDriving) {
+        if (isDriving) {// calculate the time of being in this page to update the timer in Start driving page.
             const currentDate = new Date();
             currentTimer = currentDate.getTime();
             newFinalSeconds = finalSeconds + Math.floor((currentTimer - prevTimer) / 1000);
