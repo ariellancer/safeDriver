@@ -21,12 +21,9 @@ Safe Driver is a driving safety application developed by Lidor, Omer, and Ariel,
 
 
 ## Vision
-### Click on the image to view the our vision.
-
+### Click on the image to view the our Promotional video.
 
 [![Watch the video](https://img.youtube.com/vi/lQFKBt_LDog/maxresdefault.jpg)](https://youtu.be/lQFKBt_LDog)
-
-## Promotional video
 
 
 ## Diagrama
