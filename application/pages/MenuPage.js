@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import CameraBackgroundCapture from '../tools/CameraBackgroundCapture'
+import {BASE_URL} from "../config";
 
 var numOfUnfocused = 0;
 var toSendNew = true
@@ -96,7 +97,7 @@ export default function MenuPage() {
             unfocused: numOfUnfocused
         }
         try {
-            const res = await fetch('https://3e10-2a05-bb80-3a-8cba-c86b-65f0-97e-2b19.ngrok-free.app/api/Statistics', {
+            const res = await fetch(`${BASE_URL}/api/Statistics`, {
                 'method': 'PUT',
                 'headers': {
                     'Content-Type': 'application/json',

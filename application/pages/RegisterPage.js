@@ -1,7 +1,7 @@
 import {React, useState } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity ,ScrollView} from 'react-native';
 import  {useNavigation } from '@react-navigation/native';
-
+import { BASE_URL } from '../config';
 import 'react-native-gesture-handler';
 import RegisterImage from '../tools/loginandregister.jpg';
 
@@ -46,7 +46,7 @@ export default function RegisterPage() {
                     password: password
                 };
                 try{
-                    const response = await fetch('https://3e10-2a05-bb80-3a-8cba-c86b-65f0-97e-2b19.ngrok-free.app/api/Register', {
+                    const response = await fetch(`${BASE_URL}/api/Register`, {
                     'method': 'post',
                     'headers':{
                         'Content-Type': 'application/json',

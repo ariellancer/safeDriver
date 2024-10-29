@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import LoginImage from '../tools/loginandregister.jpg';
 import 'react-native-gesture-handler';
 import {CameraType} from "expo-camera/legacy";
+import { BASE_URL } from '../config';
 
 
 export default function LoginPage() {
@@ -32,7 +33,7 @@ export default function LoginPage() {
                 password: password
             };
             try {
-                const response = await fetch('https://3e10-2a05-bb80-3a-8cba-c86b-65f0-97e-2b19.ngrok-free.app/api/Login', {
+                const response = await fetch(`${BASE_URL}/api/Login`, {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
