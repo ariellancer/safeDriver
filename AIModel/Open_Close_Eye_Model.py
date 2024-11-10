@@ -58,5 +58,5 @@ def detect(pictures):
         for future in concurrent.futures.as_completed(futures):
             future.result()  # wait for all threads to complete
     if open_eyes < 1:
-        return 0
+        return 0##to beep
     return 1
