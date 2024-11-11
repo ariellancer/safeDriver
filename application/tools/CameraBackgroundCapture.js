@@ -38,14 +38,12 @@ const CameraBackgroundCapture = ({updateVal,style,type,token}) => {
                 if (cameraRef.current) { // make sure the have a reference to camera
                     const options = { quality: 0.75, base64: true };
                     var pictures =[]
-                    // for (let i = 0; i < 2; i++) {
-                    //   const data = await cameraRef.current.takePictureAsync(options);
-                    //   const start = Date.now();
-                    //   pictures.push(data.base64);
-                    //   while (Date.now() - start < 750) {}//3/4 sec between each picture
-                    // }
-                    const data = await cameraRef.current.takePictureAsync(options);
-                    pictures.push(data.base64);
+                     for (let i = 0; i < 2; i++) {
+                       const data = await cameraRef.current.takePictureAsync(options);
+                       const start = Date.now();
+                       pictures.push(data.base64);
+                       while (Date.now() - start < 250) {}
+                     }
                     try{
                         const check = {
                         pictures:pictures
